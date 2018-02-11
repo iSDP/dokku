@@ -29,7 +29,7 @@ func main() {
 
 	cmd := flag.Arg(0)
 	switch cmd {
-	case "repo:help":
+	case "repo", "repo:help":
 		usage()
 	case "help":
 		fmt.Print(helpContent)
@@ -46,7 +46,7 @@ func main() {
 func usage() {
 	config := columnize.DefaultConfig()
 	config.Delim = ","
-	config.Prefix = "\t"
+	config.Prefix = "    "
 	config.Empty = ""
 	content := strings.Split(helpContent, "\n")[1:]
 	fmt.Println(helpHeader)

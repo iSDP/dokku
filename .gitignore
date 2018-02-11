@@ -2,7 +2,9 @@
 *.rpm
 .DS_Store
 .ruby-version
+.idea/
 .vagrant
 data/
 stack.tgz
 tmp
+coverage.out

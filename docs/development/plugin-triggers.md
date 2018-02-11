@@ -87,7 +87,7 @@ if [[ "$DOKKU_DISABLE_DEPLOY" = "true" ]]; then
 fi
 ```
 
-### `comands help` and `commands <PLUGIN_NAME>:help`
+### `commands help` and `commands <PLUGIN_NAME>:help`
 
 - Description: Your plugin should implement a `help` command in your `commands` file to take advantage of this plugin trigger. `commands help` is used by `dokku help` to aggregate all plugins abbreviated `help` output. Implementing  `<PLUGIN_NAME>:help` in your `commands` file gives users looking for help, a more detailed output. 'commands help' must be implemented inside the `commands` plugin file. It's recommended that `PLUGIN_NAME:help` be added to the commands file to ensure consistency among community plugins and give you a new avenue to share rich help content with your user.
 - Invoked by: `dokku help` and `commands <PLUGIN_NAME>:help`
@@ -259,7 +259,7 @@ cache-bust-build-arg "$@"
 
 - Description:
 - Invoked by: `dokku deploy`
-- Arguments: `$APP $IMAGE_TAG`
+- Arguments: `$APP $IMAGE_TAG [$PROC_TYPE $CONTAINER_INDEX]`
 - Example:
 
 ```shell
@@ -344,6 +344,141 @@ if [[ ! -f  "$DOKKU_ROOT/HOSTNAME" ]]; then
 fi
 ```
 
+### `network-build-config`
+
+- Description: Rebuilds network configuration
+- Invoked by: `internally triggered by proxy-build-config within proxy implementations`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-compute-ports`
+
+- Description: Computes the ports for a given app container
+- Invoked by: `internally triggered by proxy-build-config within proxy implementations`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-config-exists`
+
+- Description: Returns whether the network configuration for a given app exists
+- Invoked by: `internally triggered by core-post-deploy within proxy implementations`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-get-ipaddr`
+
+- Description: Return the ipaddr for a given app container
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP $PROC_TYPE $CONTAINER_ID`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-get-listeners`
+
+- Description: Return the listeners (host:port combinations) for a given app container
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-get-property`
+
+- Description: Return the network value for an application's property
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP $KEY`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-get-port`
+
+- Description: Return the port for a given app container
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP $PROC_TYPE $CONTAINER_ID $IS_HEROKUISH_CONTAINER`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-write-ipaddr`
+
+- Description: Write the ipaddr for a given app index
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP $PROC_TYPE $CONTAINER_INDEX $IP_ADDRESS`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `network-write-port`
+
+- Description: Write the port for a given app index
+- Invoked by: `internally triggered by a deploy`
+- Arguments: `$APP $PROC_TYPE $CONTAINER_INDEX $PORT`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
 ### `nginx-hostname`
 
 - Description: Allows you to customize the hostname for a given application.
@@ -406,6 +541,40 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 #!/usr/bin/env bash
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+# TODO
+```
+
+### `post-certs-remove`
+
+- Description: Allows you to run commands after a cert is removed
+- Invoked by: `dokku certs:remove`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+APP="$1"; verify_app_name "$APP"
+
+# TODO
+```
+
+### `post-certs-update`
+
+- Description: Allows you to run commands after a cert is added/updated
+- Invoked by: `dokku certs:add`, `dokku certs:update`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+APP="$1"; verify_app_name "$APP"
 
 # TODO
 ```
@@ -763,10 +932,28 @@ APP="$1"; verify_app_name "$APP"
 # TODO
 ```
 
-### `post-certs-update`
+### `pre-start`
 
-- Description: Allows you to run commands after a cert is added/updated
-- Invoked by: `dokku certs:add`, `dokku certs:update`
+- Description: Can be used to run commands before an application is started
+- Invoked by: `dokku ps:start`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+# Notifies an example url that an application is starting
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+APP="$1";
+
+curl "https://example.com/starting/${APP}" || true
+```
+
+### `proxy-build-config`
+
+- Description: Builds the proxy implementation configuration for a given app
+- Invoked by: `internally triggered by ps:restore`
 - Arguments: `$APP`
 - Example:
 
@@ -774,16 +961,14 @@ APP="$1"; verify_app_name "$APP"
 #!/usr/bin/env bash
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
-APP="$1"; verify_app_name "$APP"
 
 # TODO
 ```
 
-### `post-certs-remove`
+### `proxy-enable`
 
-- Description: Allows you to run commands after a cert is removed
-- Invoked by: `dokku certs:remove`
+- Description: Enables the configured proxy implementation for an app
+- Invoked by: `internally triggered by ps:restore`
 - Arguments: `$APP`
 - Example:
 
@@ -791,8 +976,21 @@ APP="$1"; verify_app_name "$APP"
 #!/usr/bin/env bash
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
-source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
-APP="$1"; verify_app_name "$APP"
+
+# TODO
+```
+
+### `proxy-disable`
+
+- Description: Disables the configured proxy implementation for an app
+- Invoked by: `internally triggered by ps:restore`
+- Arguments: `$APP`
+- Example:
+
+```shell
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 # TODO
 ```
@@ -833,7 +1031,7 @@ newrev=$2
 APP=${refname/*\//}.$reference_app
 
 if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
-  REFERENCE_REPO="$DOKKU_ROOT/$reference_app
+  REFERENCE_REPO="$DOKKU_ROOT/$reference_app"
   git clone --bare --shared --reference "$REFERENCE_REPO" "$REFERENCE_REPO" "$DOKKU_ROOT/$APP" > /dev/null
 fi
 plugn trigger receive-app $APP $newrev
@@ -889,7 +1087,7 @@ docker push $DOCKER_HUB_USER/$APP:$IMAGE_TAG
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 APP="$1"; IMAGE_TAG="$2"
 
-some code to remove a docker hub tag because it's not implemented in the CLI....
+# some code to remove a docker hub tag because it's not implemented in the CLI...
 ```
 
 ### `uninstall`
@@ -899,16 +1097,16 @@ some code to remove a docker hub tag because it's not implemented in the CLI....
  - Arguments: `$PLUGIN`
  - Example:
 
- ```shell
- #!/usr/bin/env bash
- # Cleanup up extra containers created
+```shell
+#!/usr/bin/env bash
+# Cleanup up extra containers created
 
- set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
- PLUGIN="$1"
+PLUGIN="$1"
 
- [[ "$PLUGIN" = "my-plugin" ]] && docker rmi -f "${PLUGIN_IMAGE_DEPENDENCY}"
- ```
+[[ "$PLUGIN" = "my-plugin" ]] && docker rmi -f "${PLUGIN_IMAGE_DEPENDENCY}"
+```
 
  > To avoid uninstalling other plugins make sure to check the plugin name like shown in the example.
 

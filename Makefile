@@ -1,6 +1,6 @@
 DOKKU_VERSION ?= master
 
-SSHCOMMAND_URL ?= https://raw.githubusercontent.com/dokku/sshcommand/v0.6.0/sshcommand
+SSHCOMMAND_URL ?= https://raw.githubusercontent.com/dokku/sshcommand/v0.7.0/sshcommand
 PLUGN_URL ?= https://github.com/dokku/plugn/releases/download/v0.3.0/plugn_0.3.0_linux_x86_64.tgz
 SIGIL_URL ?= https://github.com/gliderlabs/sigil/releases/download/v0.4.0/sigil_0.4.0_Linux_x86_64.tgz
 STACK_URL ?= https://github.com/gliderlabs/herokuish.git
@@ -116,7 +116,7 @@ dependencies: apt-update sshcommand plugn docker help2man man-db sigil
 	$(MAKE) -e stack
 
 apt-update:
-	apt-get update
+	apt-get update -qq
 
 help2man:
 	apt-get install -qq -y help2man
@@ -137,7 +137,7 @@ sigil:
 	wget -qO /tmp/sigil_latest.tgz ${SIGIL_URL}
 	tar xzf /tmp/sigil_latest.tgz -C /usr/local/bin
 
-docker: aufs
+docker:
 	apt-get install -qq -y curl
 	egrep -i "^docker" /etc/group || groupadd docker
 	usermod -aG docker dokku
@@ -147,11 +147,6 @@ ifdef DOCKER_VERSION
 	apt-get install -qq -y docker-engine=${DOCKER_VERSION} || (apt-cache madison docker-engine ; exit 1)
 endif
 	sleep 2 # give docker a moment i guess
-endif
-
-aufs:
-ifndef CI
-	lsmod | grep aufs || modprobe aufs || apt-get install -qq -y linux-image-extra-`uname -r` > /dev/null
 endif
 
 stack:

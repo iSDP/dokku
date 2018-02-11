@@ -5,8 +5,10 @@ ifneq ($(shell shellcheck --version > /dev/null 2>&1 ; echo $$?),0)
 ifeq ($(SYSTEM),Darwin)
 	brew install shellcheck
 else
+	sudo apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 5072E1F5
 	sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse'
-	sudo apt-get update && sudo apt-get install -y shellcheck
+	sudo rm -rf /var/lib/apt/lists/* && sudo apt-get clean
+	sudo apt-get update -qq && sudo apt-get install -qq -y shellcheck
 endif
 endif
 
@@ -73,6 +75,18 @@ lint:
 	@echo linting...
 	@$(QUIET) find . -not -path '*/\.*' -not -path './debian/*' -type f | xargs file | grep text | awk -F ':' '{ print $$1 }' | xargs head -n1 | egrep -B1 "bash" | grep "==>" | awk '{ print $$2 }' | xargs shellcheck -e SC2034
 
+ci-go-coverage:
+	docker run --rm -ti \
+		-e DOKKU_ROOT=/home/dokku \
+		-e CODACY_TOKEN=$$CODACY_TOKEN \
+		-e CIRCLE_SHA1=$$CIRCLE_SHA1 \
+		-v $$PWD:$(GO_REPO_ROOT) \
+		-w $(GO_REPO_ROOT) \
+		$(BUILD_IMAGE) \
+		bash -c "go get github.com/onsi/gomega github.com/schrej/godacov github.com/haya14busa/goverage && \
+			go list ./... | egrep -v '/vendor/|/tests/apps/' | xargs goverage -v -coverprofile=coverage.out && \
+			godacov -t $$CODACY_TOKEN -r ./coverage.out -c $$CIRCLE_SHA1" || exit $$?
+
 go-tests:
 	@echo running go unit tests...
 	docker run --rm -ti \
@@ -81,7 +95,7 @@ go-tests:
 		-w $(GO_REPO_ROOT) \
 		$(BUILD_IMAGE) \
 		bash -c "go get github.com/onsi/gomega && \
-			go list ./... | grep -v /vendor/ | grep -v /tests/apps/ | xargs go test -v -p 1 -race" || exit $$?
+			go list ./... | egrep -v '/vendor/|/tests/apps/' | xargs go test -v -p 1 -race" || exit $$?
 
 unit-tests: go-tests
 	@echo running bats unit tests...
@@ -194,3 +208,7 @@ deploy-tests:
 	@$(QUIET) $(MAKE) deploy-test-static
 
 test: setup-deploy-tests lint unit-tests deploy-tests
+
+test-ci:
+	@echo "executing tests: $(shell circleci tests glob tests/unit/*.bats | circleci tests split --split-by=timings | xargs)"
+	bats $(shell circleci tests glob tests/unit/*.bats | circleci tests split --split-by=timings | xargs)

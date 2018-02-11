@@ -35,13 +35,13 @@ h1 {
   background-repeat: no-repeat;
 }
 .header .navbar-brand a {
-  background-image: url(https://cdn.rawgit.com/dokku/dokku/v0.9.4/docs/assets/dokku.png);
+  background-image: url(https://cdn.rawgit.com/dokku/dokku/v0.11.3/docs/assets/dokku.png);
   text-indent: 40px;
 }
 .blurb {
   color: #424242;
   background-color: #ededed;
-  background-image: url(https://cdn.rawgit.com/dokku/dokku/v0.9.4/docs/assets/gplaypattern.png);
+  background-image: url(https://cdn.rawgit.com/dokku/dokku/v0.11.3/docs/assets/gplaypattern.png);
   padding: 45px 0;
   text-align: center;
 }
@@ -169,7 +169,8 @@ h1 {
   font-size: 16px;
   font-weight: 300;
   margin-bottom: 2.5em;
-  padding: 2.5em 0;
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
   text-align: center
 }
 .slack-channel .inline-container {

@@ -1,5 +1,214 @@
 # History
 
+## 0.11.3
+
+### Bug Fixes
+
+- #3031: @josegonzalez fix: ensure we respect DOKKU_DEPLOY_BRANCH when rebuilding applications
+
+### New Features
+
+- #3028: @josegonzalez Ensure parallel runs properly for non-restorable apps and moreutils parallel
+- #3030: @josegonzalez feat: allow changing the system user the properties plugin uses
+- #3024: @jcrben Use high-availability pool keyserver during tests
+- #3017: @josegonzalez feat: add pre-start trigger for notifying on application start
+
+### Documentation
+
+- #3020: @gliwka Point to docs in the right version
+- #3016: @josegonzalez Update nginx template example to use http2 when available
+
+## 0.11.2
+
+### Bug Fixes
+
+- #3014: @josegonzalez fix: handle case where DOKKU_DOCKERFILE_PORTS is an empty string
+- #3013: @alexquick Fix some issues with config/network/repo help output
+- #3012: @alexquick Fail when setting/unsetting invalid keys
+- #3011: @alexquick Forward output from plugn triggers to user
+- #3004: @josegonzalez Return/Exit 1 when an image being deployed is invalid
+
+### Documentation
+
+- #3015: @elia Tiny fixes to triggers documentation
+
+## 0.11.1
+
+### Bug Fixes
+
+- #3010: @josegonzalez fix: route config_all to the `config` command to fix datastore plugin usage
+- #3009: @josegonzalez fix: correct the guard around the config_export call in config_sub
+- #3006: @josegonzalez fix: do not allow shadowing of the CACHE_DIR variable
+- #3005: @josegonzalez fix: persist users in the dokku group through installations
+- #3003: @josegonzalez Fix issues in apps:clone calls
+- #3001: @josegonzalez fix: allow applications to begin with numeric values
+
+### New Features
+
+- #3002: @josegonzalez fix: omit redirection of docker build output
+- #3000: @josegonzalez fix: remove golang files and triggers directory for packaging
+
+## 0.11.0
+
+### Bug Fixes
+
+- #2998: @josegonzalez Fix issues in release process
+- #2993: @josegonzalez Add config_all alias for plugin usage
+- #2972: @buckle2000 Correct typo in docker-options:remove error output
+- #2964: @znz Remove unused variable
+- #2967: @znz Fix indentation in test file
+- #2963: @znz Correct typos in config plugin and remove potential infinite recursion issue
+- #2951: @josegonzalez Handle case where the app directory is a symlink
+- #2939: @znz Remove unnecessary lines
+- #2945: @znz Fix network plugin version
+- #2937: @michaelshobbs Strip restart flag from app_user_pre_deploy_trigger
+- #2931: @josegonzalez Upgrade git package for CI
+- #2928: @silverfix Do not overwrite the VHOST file during installation if it exists
+- #2926: @vtavernier Remove leading forward slash from app name in git-upload-pack
+
+### New Features
+
+- #2985: @bitmand Build a custom dhparam file once for nginx and include it as default
+- #2974: @josegonzalez Upgrade to herokuish 0.3.33
+- #2973: @josegonzalez Allow usage of git 2.13.0+ by unsetting GIT_QUARANTINE_PATH during git worktree usage
+- #2971: @miraculixx Add support for older virtualbox versions in official Dokku Vagrantfile
+- #2966: @znz Simplify internal config functions to reduce duplication
+- #2751: @alexquick Move config plugin to golang
+- #2938: @michaelshobbs Upgrade to golang 1.9.1
+- #2736: @josegonzalez Implement Network Plugin
+- #2929: @michaelshobbs Add codacy config and coverage targets
+
+### Documentation
+
+- #2935: @jcrben Document how to make herokuish optional during the bootstrap installation
+- #2982: @agorf Correct typo in user management docs
+- #2981: @agorf Correct typos in process management docs
+- #2969: @znz Correct comments on network triggers
+- #2965: @znz Remove spaces from config subcommand help output to mirror help output of other subcommands
+- #2954: @mrname Add vernemq community datastore plugin to docs
+- #2944: @axilleas Fix syntax typo in debian installation docs
+- #2932: @znz Update code comment to match documentation
+- #2933: @znz Fix version number for network binding documentation
+
+## 0.10.5
+
+### Bug Fixes
+
+- #2912: @josegonzalez Add missing depends statement for rsyslog
+- #2906: @manuel-colmenero Check the location of nginx in a central way
+- #2895: @josegonzalez cd to app directory when calling git worktree add
+
+### Documentation
+
+- #2922: @axilleas Clarify the minimum Nginx version for HTTP/2 support
+- #2919: @wootwoot1234 Update nginx documentation surrounding file uploading for php buildpack users
+- #2913: @znz Fix a typo in the rpm release script
+- #2910: @buckle2000 Add a note about using the full git url for non-compliant toolchains
+
+## 0.10.4
+
+### Bug Fixes
+
+- #2894: @josegonzalez fix: bail if any step in the release process fails
+- #2880: @josegonzalez fix: properly detect empty subcommands
+- #2881: @josegonzalez Verify app name on git push
+- #2858: @cstroe Use correct port number for the upstream.
+- #2848: @josegonzalez Ensure https applications return an https url from `dokku url`
+- #2839: @josegonzalez fix: skip clearing cache if we are not building a herokuish image
+
+### New Features
+
+- #2890: @michaelshobbs use circleci 2.0
+- #2847: @scjody Add nginx ppa before installing Dokku
+- #2850: @michaelshobbs add optional PROC_TYPE and CONTAINER_INDEX to docker-args-deploy plugn trigger
+- #2840: @josegonzalez Add DYNO environment variable to run containers
+- #2824: @josegonzalez Upgrade herokuish to version 0.3.31
+
+### Documentation
+
+- #2861: @adelq Use non-deprecated apps command
+- #2878: @m0rth1um Add telegram notifications plugin
+- #2876: @josegonzalez docs: clarify storage documentation caveats
+- #2873: @josegonzalez docs: add a note on which docs to look at for customizing nginx docs
+- #2867: @josegonzalez docs: cleanup help output for dokku shell
+- #2859: @josegonzalez docs: use relative link for application deployment doc
+- #2866: @josegonzalez Add missing migration guides
+- #2863: @josegonzalez docs: fix syntax on getting started docs
+- #2836: @fishnux Add a note regarding nginx dependency to installation docs
+- #2834: @iansu Clarify port exposure in Dockerfile documentation
+
+## 0.10.3
+
+### Bug Fixes
+
+- #2832: @josegonzalez fix: use python2.7 binary instead of python2 binary
+
+## 0.10.2
+
+### New Features
+
+- #2827: @josegonzalez feat: allow installation of openresty instead of nginx
+
+## 0.10.1
+
+### Bug Fixes
+
+- #2826: @josegonzalez Fix HISTORY.md generator
+
+## 0.10.0
+
+### Bug Fixes
+
+- #2820: @josegonzalez Require netcat in debian packaging
+- #2774: @fruitl00p Include docker-options in the default `dokku`
+- #2778: @zarqman Fix /etc/logrotate.d/dokku on debian
+- #2747: @ebeigarts Update herokuish base image on updates using --pull
+- #2739: @josegonzalez Use listener_port in nginx.conf.sigil
+- #2735: @josegonzalez Ensure we can call ps:report without specifying an application
+- #2733: @josegonzalez Add support for new docker package names
+- #2730: @weyert Ignore the cache directory when cloning an app
+- #2723: @weyert Call non-deprecated plugin:list method
+
+### New Features
+
+- #2822: @josegonzalez refactor: allow skipping cleanup on a per-application basis
+- #2754: @fzerorubigd Add support for set DOKKU_IMAGE per app
+- #2815: @markstory Add stickler-ci configuration.
+- #2809: @oliw Remove aufs step from Makefile
+- #2785: @josegonzalez Add a release-plugin binary
+- #2777: @stokarenko Turn on ps-post-stop hook.
+- #2781: @fruitl00p Adds docker.io support
+- #2766: @josegonzalez Upgrade to herokuish 0.3.29
+- #2765: @josegonzalez Install python3-software-properties as an alternative to python-software-properties
+- #2642: @chiedo Added better default nginx error pages
+- #2678: @callahad Default to secure PCI-compliant SSL setup
+- #2734: @josegonzalez Allow quieter report output
+
+### Documentation
+
+- #2803: @iSDP Adding related articles on the Docker Image Deployment page
+- #2798: @znz Update CURL_CONNECT_TIMEOUT in docs
+- #2795: @josegonzalez docs: Add documentation around adding build-time configuration variables
+- #2791: @yazinsai Correct typo in persistent storage docs
+- #2789: @h4ckninja Subject-verb agreement
+- #2790: @flyinggrizzly Add entry for insecure connection issue in Rails
+- #2788: @josegonzalez Flesh out uninstallation documentation
+- #2784: @josegonzalez Document special dokku environment variables
+- #2773: @znz Update year in footer [ci skip]
+- #2768: @znz Ubuntu 12.04 is EOL
+- #2769: @lucianopf Fix SlackButton for mobile devices.
+- #2763: @ZiadSalah Update vagrant documentation for windows users
+- #2764: @joshmanders Create PULL_REQUEST_TEMPLATE.md
+- #2758: @AxelTheGerman Update doc location for dokku-git-rev community plugin
+- #2757: @nodanaonlyzuul Fix typo from "To use a dockerfiles" to "To use a dockerfile" singular
+- #2753: @abrkn Use short-hand method for shutting down all applications in upgrade docs
+- #2746: @josegonzalez Add redirect for installation to advanced install docs
+- #2738: @josegonzalez Add missing `NO_SSL_SERVER_NAME` to example template
+- #2457: @john-doherty Update Digitalocean installation instructions
+- #2725: @timaschew Fix typo in application management docs
+- #2719: @joshco Clarify that nginx.conf.sigil must be committed to repository
+- #2715: @josegonzalez Use urls that are linkable on github
+
 ## 0.9.4
 
 ### Documentation

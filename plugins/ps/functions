@@ -93,11 +93,13 @@ ps_start() {
   local IMAGE_TAG=$(get_running_image_tag "$APP");
 
   if (is_deployed "$APP"); then
+    plugn trigger pre-start "$APP"
     if ! (is_app_running "$APP"); then
       release_and_deploy "$APP" "$IMAGE_TAG"
     else
       echo "App $APP already running"
     fi
+    plugn trigger proxy-build-config "$APP"
   else
     echo "App $APP has not been deployed"
   fi

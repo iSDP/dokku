@@ -22,6 +22,15 @@ assert_urls() {
   assert_output < <(tr ' ' '\n' <<< "${urls}" | sort)
 }
 
+assert_url() {
+  url=$1
+  run dokku url $TEST_APP
+  echo "output: "$output
+  echo "status: "$status
+  echo "url: ${url}"
+  assert_output "${url}"
+}
+
 build_nginx_config() {
   # simulate nginx post-deploy
   dokku domains:setup $TEST_APP
@@ -41,7 +50,13 @@ build_nginx_config() {
   echo "output: "$output
   echo "status: "$status
   assert_failure
+
   run /bin/bash -c "dokku fakecommand 2>&1 | grep -q 'is not a dokku command'"
+  echo "output: "$output
+  echo "status: "$status
+  assert_success
+
+  run /bin/bash -c "dokku apps: 2>&1 | grep -q 'is not a dokku command'"
   echo "output: "$output
   echo "status: "$status
   assert_success
@@ -64,6 +79,13 @@ build_nginx_config() {
   assert_urls "http://test.dokku.me" "http://${TEST_APP}.dokku.me" "https://test.dokku.me" "https://${TEST_APP}.dokku.me"
 }
 
+@test "(core) url (app ssl)" {
+  setup_test_tls
+  assert_url "https://dokku.me"
+  build_nginx_config
+  assert_url "https://${TEST_APP}.dokku.me"
+}
+
 @test "(core) urls (wildcard ssl)" {
   setup_test_tls wildcard
   assert_urls "https://dokku.me"
@@ -80,4 +102,11 @@ build_nginx_config() {
   echo "output: "$output
   echo "status: "$status
   assert_success
+}
+
+@test "(core) git-remote (bad name)" {
+  run deploy_app nodejs-express ssh://dokku@127.0.0.1:22333/home/dokku/$TEST_APP
+  echo "output: "$output
+  echo "status: "$status
+  assert_failure
 }

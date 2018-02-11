@@ -89,6 +89,7 @@ Note: The following plugins have been supplied by our community and may not have
 [Kloadut]: https://github.com/Kloadut
 [krisrang]: https://github.com/krisrang
 [luxifer]: https://github.com/luxifer
+[m0rth1um]: https://github.com/m0rth1um
 [Maciej Łebkowski]: https://github.com/mlebkowski
 [matto1990]: https://github.com/matto1990
 [mbreit]: https://github.com/mbreit
@@ -99,6 +100,7 @@ Note: The following plugins have been supplied by our community and may not have
 [mixxorz]: https://github.com/mixxorz
 [mlebkowski]: https://github.com/mlebkowski
 [motin]: https://github.com/motin
+[mrname]: https://github.com/mrname
 [musicglue]: https://github.com/musicglue
 [neam]: https://github.com/neam
 [nickcharlton]: https://github.com/nickcharlton
@@ -151,6 +153,7 @@ Note: The following plugins have been supplied by our community and may not have
 | [RabbitMQ](https://github.com/jlachowski/dokku-rabbitmq-plugin)                                   | [jlachowski][]        | 0.3.x                 |
 | [RabbitMQ (single container)](https://github.com/jlachowski/dokku-rabbitmq-single-plugin)         | [jlachowski][]        | 0.3.x                 |
 | [ElasticMQ (SQS compatible)](https://github.com/cu12/dokku-elasticmq)                             | [cu12][]              | 0.5.0+                |
+| [VerneMQ (MQTT Broker)](https://github.com/SpinifexGroup/dokku-vernemq)                           | [mrname][]            | 0.4.0+                |
 
 #### Other
 
@@ -215,6 +218,7 @@ Note: The following plugins have been supplied by our community and may not have
 | [Docker auto persist volumes](https://github.com/Flink/dokku-docker-auto-volumes)                 | [Flink][]             | 0.4.0+                |
 | [Hostname](https://github.com/michaelshobbs/dokku-hostname)                                       | [michaelshobbs][]     | 0.4.0+                |
 | [Logspout](https://github.com/michaelshobbs/dokku-logspout)                                       | [michaelshobbs][]     | 0.4.0+                |
+| [Syslog](https://github.com/michaelshobbs/dokku-syslog)                                           | [michaelshobbs][]     | 0.10.4+               |
 | [Long Timeout](https://github.com/investtools/dokku-long-timeout-plugin)                          | [investtools][]       | 0.4.0+                |
 | [Monit](https://github.com/cjblomqvist/dokku-monit)                                               | [cjblomqvist][]       | 0.3.x                 |
 | [Monorepo](https://github.com/iamale/dokku-monorepo)                                              | [iamale][]            | 0.4.0+                |
@@ -222,6 +226,7 @@ Note: The following plugins have been supplied by our community and may not have
 | [Node](https://github.com/pnegahdar/dokku-node)                                                   | [pnegahdar][]         | 0.3.x                 |
 | [Rollbar](https://github.com/iloveitaly/dokku-rollbar)                                            | [iloveitaly][]        | 0.5.0+                |
 | [Slack Notifications](https://github.com/ribot/dokku-slack)                                       | [ribot][]             | 0.4.0+                |
+| [Telegram Notifications](https://github.com/m0rth1um/dokku-telegram)                              | [m0rth1um][]          | 0.4.0+                |
 | [Tor](https://github.com/michaelshobbs/dokku-tor)                                                 | [michaelshobbs][]     | 0.4.0+                |
 | [User ACL](https://github.com/dokku-community/dokku-acl)                                          | [Maciej Łebkowski][]  | 0.4.0+                |
 | [Webhooks](https://github.com/nickstenning/dokku-webhooks)                                        | [nickstenning][]      | 0.3.x                 |
